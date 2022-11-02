@@ -1,55 +1,44 @@
 body {
-    background-color: slategrey;
+  background-color: slategrey;
+  color: black;
+
 }
 
-p {
-  color: white;
-  font-family: "Times New Roman", Times, serif;
-  font-weight: bold;
-  font-size: 20px;
+
+h1 {
+  color: black;
+  font-family: 'Play', sans-serif;
+  font-size: 30px;
+  border-color: black;
+  border-width: 10px;
+  border-style: double;
+  padding: 5px;
+  width: 300px;
+}
+
+h2{
+  color: black;
+  font-family: 'Play', sans-serif;
+  border-color: black;
+  border-width: 10px;
+  border-style: double;
+  padding: 10px;
+
 }
 
 img {
-  width: 200px;
-  aspect-ratio: 2/ 3;
+  width: 350px;
+  height: 550px
 }
 
-iframe {
-  aspect-ratio: 16 / 9;
-  height: 300px;
-}
-.dropbtn {
-  background-color: white;
+p {
   color: black;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+
 }
 
-.dropbtn:hover, .dropbtn:focus {
-  background-color: black;
-  color: white;
-}
+:hover {
+border-width: 10px;
 
-.dropdown {
-  position: relative;
-  display: inline-block;
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.dropdown a:hover {background-color: #ddd;}
-.show {display: block;}

@@ -5,42 +5,28 @@ const getData = async (url, params) => {
     console.log(error);
   }
 };
+
 const getMovies1 = async () => {
+  let datatag = document.getElementById("datatag");
+  datatag.innerHTML = "";
+  let selectedMovie = document.getElementById("mainselect");
+  console.log("selected movie: " + selectedMovie.value);
   const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
     params: {
       api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Creed II",
+      query: selectedMovie.value,
     }
   });
 
-  for (let movie of movieData.data.results) {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
+  //console.log("data: " + JSON.stringify(movieData, null, 2));
+  console.log("size: " + movieData.data.results.length)
+  if (movieData.data.results.length < 1) {
+    return;
   }
-};
-const getMovies2 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Spider-Man: No Way Home",
-    }
-  });
 
-  movieData.data.results.forEach(async (movie) => {
+  //for (let movie of movieData.data.results) {
+    let movie = movieData.data.results[0];
+    console.log("movie: " + movie)
     const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
       params: {
         api_key: "f944b70daa59b60504fca0c383e63483",
@@ -48,259 +34,23 @@ const getMovies2 = async () => {
       }
     });
 
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
+    //const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
     const p = document.createElement('p');
+    p.setAttribute('id','para1')
     const img = document.createElement('img');
     const iframe = document.createElement('iframe');
+    const h1 =document.createElement("h1")
 
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
+    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.overview}`;
     img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
+    h1.innerHTML = `${extraData.data.original_title}`
+    //iframe.src = `https://www.youtube.com/embed/${trailer}`
 
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
+
+
+    datatag.append(h1);
+    datatag.append(p);
+    datatag.append(img);
+    //document.body.append(iframe);
+  //}
 };
-
-const getMovies3 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Avengers: Infinity War",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies4 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Avengers: Endgame",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies5 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Star Wars: The Force Awakens",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies6 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Skyfall",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies7 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Transformers: Age of Extinction",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies8 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "Ocean's Thirteen",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-    
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-const getMovies9 = async () => {
-  const movieData = await getData("https://api.themoviedb.org/3/search/movie", {
-    params: {
-      api_key: "f944b70daa59b60504fca0c383e63483",
-      query: "The Fate of the Furious",
-    }
-  });
-
-  movieData.data.results.forEach(async (movie) => {
-    const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
-      params: {
-        api_key: "f944b70daa59b60504fca0c383e63483",
-        append_to_response: "videos",
-      }
-    });
-
-    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
-    const p = document.createElement('p');
-    const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.popularity}`;
-    img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-    document.body.append(p);
-    document.body.append(img);
-    document.body.append(iframe);
-  });
-};
-
-
-getMovies1();
-getMovies2();
-getMovies3();
-getMovies4();
-getMovies5();
-getMovies6();
-getMovies7();
-getMovies8();
-getMovies9();
-
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
