@@ -5,7 +5,7 @@ const getData = async (url, params) => {
     console.log(error);
   }
 };
-
+ 
 const getMovies1 = async () => {
   let datatag = document.getElementById("datatag");
   datatag.innerHTML = "";
@@ -17,14 +17,12 @@ const getMovies1 = async () => {
       query: selectedMovie.value,
     }
   });
-
-  //console.log("data: " + JSON.stringify(movieData, null, 2));
+ 
   console.log("size: " + movieData.data.results.length)
   if (movieData.data.results.length < 1) {
     return;
   }
-
-  //for (let movie of movieData.data.results) {
+ 
     let movie = movieData.data.results[0];
     console.log("movie: " + movie)
     const extraData = await getData(`https://api.themoviedb.org/3/movie/${movie.id}`, {
@@ -34,23 +32,22 @@ const getMovies1 = async () => {
       }
     });
 
-    //const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
+    const iframe = document.createElement('iframe');
     const p = document.createElement('p');
     p.setAttribute('id','para1')
     const img = document.createElement('img');
-    const iframe = document.createElement('iframe');
     const h1 =document.createElement("h1")
-
-    p.innerHTML = `${movie.title} -- ${movie.release_date} -- ${movie.overview}`;
+    const trailer = extraData.data.videos.results.filter((video) => video.type === "Trailer").at(0).key;
+ 
+    p.innerHTML = `${movie.title} -- Release Date: ${movie.release_date} -- Rating: ${extraData.data.vote_average}/10 Stars -- Length of Film: ${extraData.data.runtime} minutes -- Popularity: ${movie.popularity} -- 
+    Box Office: ${extraData.data.revenue} USD -- Budget: ${extraData.data.budget} USD -- Overview: ${movie.overview}`
     img.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     h1.innerHTML = `${extraData.data.original_title}`
-    //iframe.src = `https://www.youtube.com/embed/${trailer}`
-
-
+    iframe.src = `https://www.youtube.com/embed/${trailer}`
 
     datatag.append(h1);
     datatag.append(p);
     datatag.append(img);
-    //document.body.append(iframe);
-  //}
+    datatag.append(iframe);
+
 };
